@@ -10,6 +10,17 @@ module EnvVariables {
 
   /* Set a environment variable to value */
   proc setEnv(varName:string , val:string) {
+    var i = 0;
+    var newVarStr = varName + '=' + val;
+    while (environ[i] != nil) {
+      var envVarPtr = environ[i];
+      var envVarStr = envVarPtr:c_string:string;
+      if (envVarStr.find('=') == 0) continue;
+      if (envVarStr.split('=')[1] == varName) {
+        environ[i] = newVarStr.c_str();
+      }
+      i += 1;
+    }
   }
 
   /* Get env var value, using default if not set */
@@ -35,9 +46,9 @@ module EnvVariables {
   iter Envs() {
     var i = 0;
     while (environ[i] != nil) {
-      var envvarptr = environ[i];
-      var envvarstr = envvarptr:c_string:string;
-      yield envvarstr;
+      var envVarPtr = environ[i];
+      var envVarStr = envVarPtr:c_string:string;
+      yield envVarStr;
       i += 1;
     }
   }
