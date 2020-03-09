@@ -8,38 +8,20 @@ module EnvVariables {
   private extern var environ: c_ptr(c_ptr(c_char)); // char **environ;
   private use List;
 
+  private extern proc getenv(name : c_string) : c_string;
+  private extern proc setenv(name : c_string, envval : c_string, overwrite : c_int) : c_int;
+
   /* Set a environment variable to value */
   proc setEnv(varName:string , val:string) {
-    var i = 0;
-    var newVarStr = varName + '=' + val;
-    while (environ[i] != nil) {
-      var envVarPtr = environ[i];
-      var envVarStr = envVarPtr:c_string:string;
-      if (envVarStr.find('=') == 0) continue;
-      if (envVarStr.split('=')[1] == varName) {
-        environ[i] = newVarStr.c_str();
-      }
-      i += 1;
-    }
+    setenv(varName.c_str(), val.c_str(), 1);
   }
 
   /* Get env var value, using default if not set */
-  proc getEnv(varName, defaultValue='') {
-    for env in Envs() {
-      var nowName:string = '';
-      var nowVal:string = '';
-      // Only first '=' will be considered as sep
-      for val in env.split('=') {
-        if (nowName == '') {
-          nowName = val;
-        }
-        else nowVal = nowVal + val;
-      }
-      if (nowName == varName) {
-        return nowVal;
-      }
-    }
-    return defaultValue;
+  proc getEnv(varName:string, defaultValue='') {
+    var ptr:c_string = getenv(varName.c_str());
+    if (is_c_nil(ptr)) then
+      return defaultValue;
+    else return ptr:string;
   }
 
   /* Iterator to iterate over all defined envs */
