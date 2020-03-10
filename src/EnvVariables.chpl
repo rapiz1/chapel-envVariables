@@ -9,11 +9,12 @@ module EnvVariables {
 
   private extern proc getenv(name : c_string) : c_string;
   private extern proc setenv(name : c_string, envval : c_string, overwrite : c_int) : c_int;
+  private extern proc unsetenv(name : c_string) : c_int;
 
   /*
     Set a environment variable to value.
 
-    :arg varName: The name of the environment variable to set..
+    :arg varName: The name of the environment variable to set.
     :type varName: `string`
 
     :arg varValue: The new value of the environment variable.
@@ -24,6 +25,19 @@ module EnvVariables {
   */
   proc setEnv(varName:string , varValue:string) {
     return setenv(varName.c_str(), varValue.c_str(), 1);
+  }
+
+  /* 
+    Delete a environment variable.
+
+    :arg varName: The name of the environment variable to delete.
+    :type varName: `string`
+
+    :return: Returns 0 on success, -1 on error.
+    :rtype: `int`
+  */
+  proc unsetEnv(varName:string) {
+    return unsetenv(varName.c_str());
   }
 
   /*
