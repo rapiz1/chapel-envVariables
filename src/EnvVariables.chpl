@@ -41,7 +41,7 @@ module EnvVariables {
   }
 
   /*
-    Get env var value, using default if not set
+    Get env var value, using default if not set.
 
     :arg varName: The name of the environment variable to retrieve.
     :type varName: `string`
