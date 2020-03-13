@@ -23,7 +23,7 @@ module EnvVariables {
     :return: Returns 0 on success, -1 on error.
     :rtype: `int`
   */
-  proc setEnv(varName:string , varValue:string) {
+  proc setEnv(varName:string , varValue:string):int {
     return setenv(varName.c_str(), varValue.c_str(), 1);
   }
 
@@ -36,7 +36,7 @@ module EnvVariables {
     :return: Returns 0 on success, -1 on error.
     :rtype: `int`
   */
-  proc unsetEnv(varName:string) {
+  proc unsetEnv(varName:string):int {
     return unsetenv(varName.c_str());
   }
 
@@ -52,7 +52,7 @@ module EnvVariables {
     :return: The value of the variable
     :rtype: `string`
   */
-  proc getEnv(varName:string, defaultValue='') {
+  proc getEnv(varName:string, defaultValue=''):string {
     var ptr:c_string = getenv(varName.c_str());
     if (is_c_nil(ptr)) then
       return defaultValue;
