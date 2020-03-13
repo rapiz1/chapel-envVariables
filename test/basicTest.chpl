@@ -6,7 +6,7 @@ proc basicTest(test: borrowed Test) throws{
   test.assertEqual(getEnv("CHPL_ABCDEF_ENV_TEST"), "ATESTA");
 
   var found:bool = false;
-  for env in Envs() {
+  for env in envs() {
     if (env == "CHPL_ABCDEF_ENV_TEST=ATESTA") then
       found = true;
   }

@@ -12,7 +12,7 @@ module EnvVariables {
   private extern proc unsetenv(name : c_string) : c_int;
 
   /*
-    Set a environment variable to value.
+    Set an environment variable to value.
 
     :arg varName: The name of the environment variable to set.
     :type varName: `string`
@@ -28,7 +28,7 @@ module EnvVariables {
   }
 
   /* 
-    Delete a environment variable.
+    Delete an environment variable.
 
     :arg varName: The name of the environment variable to delete.
     :type varName: `string`
@@ -41,7 +41,7 @@ module EnvVariables {
   }
 
   /*
-    Get env var value, using default if not set.
+    Get the value of the environment variable, using default if not set.
 
     :arg varName: The name of the environment variable to retrieve.
     :type varName: `string`
@@ -59,8 +59,8 @@ module EnvVariables {
     else return ptr:string;
   }
 
-  /* Iterator to iterate over all defined envs */
-  iter Envs() {
+  /* Iterator to iterate over all defined environment variables */
+  iter envs() {
     var i = 0;
     while (environ[i] != nil) {
       var envVarPtr = environ[i];
