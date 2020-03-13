@@ -1,5 +1,5 @@
 use UnitTest;
-use EnvVariables;
+use Env;
 
 proc basicTest(test: borrowed Test) throws{
   setEnv("CHPL_ABCDEF_ENV_TEST", "ATESTA");

@@ -1,8 +1,8 @@
 /* 
-  The `EnvVariables` module provides procedures and an iterator
+  The `Env` module provides procedures and an iterator
   which can help to manage environment variables.
 */
-module EnvVariables {
+module Env {
   require "c-environ.h";
   private use SysCTypes;
   private extern var environ: c_ptr(c_ptr(c_char)); // char **environ;
