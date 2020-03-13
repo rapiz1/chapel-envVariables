@@ -24,7 +24,11 @@ module Env {
     :rtype: `int`
   */
   proc locale.setEnv(varName:string , varValue:string):int {
-    return setenv(varName.c_str(), varValue.c_str(), 1);
+    var ret:int;
+    on this {
+       ret = setenv(varName.c_str(), varValue.c_str(), 1);
+    }
+    return ret;
   }
 
   /* 
@@ -37,7 +41,11 @@ module Env {
     :rtype: `int`
   */
   proc locale.unsetEnv(varName:string):int {
-    return unsetenv(varName.c_str());
+    var ret:int;
+    on this {
+      ret = unsetenv(varName.c_str());
+    }
+    return ret;
   }
 
   /*
@@ -53,20 +61,26 @@ module Env {
     :rtype: `string`
   */
   proc locale.getEnv(varName:string, defaultValue=''):string {
-    var ptr:c_string = getenv(varName.c_str());
-    if (is_c_nil(ptr)) then
-      return defaultValue;
-    else return ptr:string;
+    var ret:string;
+    on this {
+      var ptr:c_string = getenv(varName.c_str());
+      if (is_c_nil(ptr)) then
+        ret = defaultValue;
+      else ret = ptr:string;
+    }
+    return ret;
   }
 
   /* Iterator to iterate over all defined environment variables */
   iter locale.envs() {
-    var i = 0;
-    while (environ[i] != nil) {
-      var envVarPtr = environ[i];
-      var envVarStr = envVarPtr:c_string:string;
-      yield envVarStr;
-      i += 1;
+    on this {
+      var i = 0;
+      while (environ[i] != nil) {
+        var envVarPtr = environ[i];
+        var envVarStr = envVarPtr:c_string:string;
+        yield envVarStr;
+        i += 1;
+      }
     }
   }
 
