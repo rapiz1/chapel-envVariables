@@ -1,7 +1,7 @@
 # The Env Module for Chapel
 This repo is for [Chapel#5939](https://github.com/chapel-lang/chapel/issues/5939)
 
-[Documentation](https//rapiz1.github.io/chapel-envVariables) is available.
+[Documentation](https://rapiz1.github.io/chapel-envVariables) is available.
 
 ## TODO
 - [x] Basic functions
