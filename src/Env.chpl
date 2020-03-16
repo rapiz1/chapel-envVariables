@@ -71,7 +71,11 @@ module Env {
     return ret;
   }
 
-  /* Iterator to iterate over all defined environment variables */
+  /*
+    Iterator to iterate over all defined environment variables
+
+    :yields: A string containing a record of environment variable
+    */
   iter locale.envs() {
     on this {
       var i = 0;
