@@ -9,3 +9,5 @@ for (idx, env) in zip(1.., here.envs()) {
 
 // getEnv
 writeln('Here is your env: ', here.getEnv('PATH'));
+
+writeln('Here is another env: ', envs['USER']);

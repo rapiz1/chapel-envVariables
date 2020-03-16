@@ -5,6 +5,7 @@
 module Env {
   require "c-environ.h";
   private use SysCTypes;
+  private use Map;
   private extern var environ: c_ptr(c_ptr(c_char)); // char **environ;
 
   private extern proc getenv(name : c_string) : c_string;
@@ -88,6 +89,18 @@ module Env {
     }
   }
 
-  /* Associative array that stores state of envs */
-  //var Envs: [string] string;
+  /*
+    A map that stores state of envs
+
+    .. note::
+
+      The map is populated when the module is imported and does not reflect the realtime state.
+      Also, this is not locale aware. Use methods if you need to run on multiple locales.
+
+  */
+  var envs: map(string, string);
+  for env in here.envs() {
+    var (varName, sep, varValue) = env.partition('=');
+    envs.add(varName, varValue);
+  }
 }
